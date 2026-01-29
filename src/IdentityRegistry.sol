@@ -12,7 +12,7 @@ import {Errors} from "./libraries/Errors.sol";
 contract IdentityRegistry is IIdentityRegistry, ERC721URIStorage, Ownable {
     mapping(uint256 => mapping(string => bytes)) private _metadata;
 
-    uint256 private s_agentId = 0;
+    uint256 private s_agentId = 1;
     address private s_agentWallet;
 
     event Registered(uint256 indexed agentId, string tokenURI_, address indexed registrant);
@@ -21,7 +21,6 @@ contract IdentityRegistry is IIdentityRegistry, ERC721URIStorage, Ownable {
     constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) Ownable(msg.sender) {}
 
     function register(string calldata tokenURI) external onlyOwner returns (uint256 agentId) {
-        // metadata not empty
         if (bytes(tokenURI).length <= 0) revert Errors.InvalidInput();
 
         agentId = s_agentId++; // 0

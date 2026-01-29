@@ -3,6 +3,7 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 import {IdentityRegistry} from "../src/IdentityRegistry.sol";
+import {Errors} from "../src/libraries/Errors.sol";
 
 contract RegistryUnit is Test {
     IdentityRegistry registry;
@@ -59,7 +60,7 @@ contract RegistryUnit is Test {
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(key, ethSignedMessageHash);
         bytes memory signature = abi.encodePacked(r, s, v);
 
-        vm.expectRevert(IdentityRegistry.InvalidSignature.selector);
+        vm.expectRevert(Errors.InvalidSignature.selector);
         registry.setAgentWallet(agentId, newWallet, signature);
     }
 }
